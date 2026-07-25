@@ -13,7 +13,7 @@ async function main() {
   const incidents = generateIncidents(5, seed);
   const stadiumState = { ...baseState, incidents };
 
-  // First validate as stringified-parsed JSON like an API would receive
+  //First validate as stringified-parsed JSON like an API would receive
   const jsonParsedState = JSON.parse(JSON.stringify(stadiumState));
 
   const parseResult = insightsRequestSchema.safeParse({
