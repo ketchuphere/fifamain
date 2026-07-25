@@ -342,19 +342,6 @@ npx tsc --noEmit
 npm run lint
 ```
 
----
-
-## Accessibility
-
-PitchPilot is designed for **WCAG 2.1 AA compliance**:
-
-- ✅ **Semantic HTML5** — `<section>`, `<nav>`, `<main>`, `<header>`, `<footer>`
-- ✅ **ARIA labels** on all interactive elements (buttons, inputs, landmarks)
-- ✅ **Keyboard navigation** — all actions accessible via Tab/Enter/Escape
-- ✅ **Focus management** — visible focus rings with `focus:ring-2`
-- ✅ **Color contrast** — all text meets 4.5:1 contrast ratio against dark backgrounds
-- ✅ **Screen reader support** — `aria-hidden` on decorative icons, `aria-label` on actions
-- ✅ **Step-free routing** — wheelchair-accessible navigation with adjusted walking speed (`WHEELCHAIR_SPEED_MPM`)
 
 ---
 
@@ -445,4 +432,4 @@ smart-stadium/
 
 ## License
 
-Built for the Google PromptWars Hackathon — Challenge 04: Smart Stadiums & Tournament Operations — FIFA World Cup 2026.
+This is built for the Google PromptWars Hackathon Challenge 04: Smart Stadiums & Tournament Operations — FIFA World Cup 2026.
