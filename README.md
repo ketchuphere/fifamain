@@ -1,4 +1,4 @@
-# 🏟️ PitchPilot — AI World Cup Companion & Stadium Operations Platform
+# PitchPilot — AI World Cup Companion & Stadium Operations Platform
 
 > **FIFA World Cup 2026 · 16 Host Stadiums · AI-Powered Fan Companion & Intelligent Operations**
 
@@ -11,7 +11,7 @@ PitchPilot is a GenAI-powered platform that optimizes stadium operations and enh
 
 ---
 
-## 📑 Table of Contents
+##  Table of Contents
 
 - [Chosen Vertical](#chosen-vertical)
 - [How This Solves the Problem Statement](#how-this-solves-the-problem-statement)
@@ -138,27 +138,27 @@ This prevents malformed LLM outputs, injection attacks, and type inconsistencies
 
 | Feature                      | Component                | Engine                     |
 | ---------------------------- | ------------------------ | -------------------------- |
-| 🎯 **8 Quick Actions**       | `QuickActions.tsx`       | —                          |
-| ⚽ **Live Match Timeline**   | `MatchTimeline.tsx`      | `matchEngine.ts`           |
-| 📋 **Personal Itinerary**    | `PersonalItinerary.tsx`  | `itineraryEngine.ts`       |
-| ⛅ **Weather Advisory**      | `WeatherBanner.tsx`      | `weatherEngine.ts`         |
-| 🔥 **Crowd Sentiment**       | `FanSentiment.tsx`       | `sentimentEngine.ts`       |
-| 🚨 **Emergency Banner**      | `EmergencyBanner.tsx`    | `emergencyEngine.ts`       |
-| 🍔 **Wait Time Display**     | `WaitTimeDisplay.tsx`    | `waitTimeEngine.ts`        |
-| 💡 **Smart Recommendations** | `RecommendationCard.tsx` | `contextDecisionEngine.ts` |
+|  **8 Quick Actions**       | `QuickActions.tsx`       | —                          |
+|  **Live Match Timeline**   | `MatchTimeline.tsx`      | `matchEngine.ts`           |
+|  **Personal Itinerary**    | `PersonalItinerary.tsx`  | `itineraryEngine.ts`       |
+|  **Weather Advisory**      | `WeatherBanner.tsx`      | `weatherEngine.ts`         |
+|  **Crowd Sentiment**       | `FanSentiment.tsx`       | `sentimentEngine.ts`       |
+|  **Emergency Banner**      | `EmergencyBanner.tsx`    | `emergencyEngine.ts`       |
+|  **Wait Time Display**     | `WaitTimeDisplay.tsx`    | `waitTimeEngine.ts`        |
+|  **Smart Recommendations** | `RecommendationCard.tsx` | `contextDecisionEngine.ts` |
 
 ### Operations Dashboard
 
 | Feature                        | Component                   | Engine                    |
 | ------------------------------ | --------------------------- | ------------------------- |
-| 🗺️ **Interactive Stadium Map** | `GraphicalStadiumMap.tsx`   | `crowdAnalyticsEngine.ts` |
-| ⚡ **AI Staff Copilot**        | `StaffCopilot.tsx`          | `incidentEngine.ts`       |
-| 📊 **Predictive Congestion**   | `PredictiveCongestion.tsx`  | `crowdAnalyticsEngine.ts` |
-| 📰 **Proactive AI Briefing**   | `ProactiveInsightBrief.tsx` | Gemini 3.1 Flash Lite     |
-| 🏗️ **Zone Status Grid**        | `ZoneStatusGrid.tsx`        | `crowdAnalyticsEngine.ts` |
-| 📉 **Crowd Density Card**      | `CrowdDensityCard.tsx`      | `crowdAnalyticsEngine.ts` |
-| ⏱️ **Wait Time Card**          | `WaitTimeCard.tsx`          | `waitTimeEngine.ts`       |
-| 🚨 **Incident Log**            | `IncidentLog.tsx`           | `incidentEngine.ts`       |
+|  **Interactive Stadium Map** | `GraphicalStadiumMap.tsx`   | `crowdAnalyticsEngine.ts` |
+|  **AI Staff Copilot**        | `StaffCopilot.tsx`          | `incidentEngine.ts`       |
+|  **Predictive Congestion**   | `PredictiveCongestion.tsx`  | `crowdAnalyticsEngine.ts` |
+|  **Proactive AI Briefing**   | `ProactiveInsightBrief.tsx` | Gemini 3.1 Flash Lite     |
+|  **Zone Status Grid**        | `ZoneStatusGrid.tsx`        | `crowdAnalyticsEngine.ts` |
+|  **Crowd Density Card**      | `CrowdDensityCard.tsx`      | `crowdAnalyticsEngine.ts` |
+|  **Wait Time Card**          | `WaitTimeCard.tsx`          | `waitTimeEngine.ts`       |
+|  **Incident Log**            | `IncidentLog.tsx`           | `incidentEngine.ts`       |
 
 ### AI Chat Companion
 
@@ -250,8 +250,8 @@ graph TD
 
 ```bash
 # Clone the repository
-git clone https://github.com/SuBhAm6G/PitchPilot.git
-cd PitchPilot/smart-stadium
+git clone https://github.com/ketchuphere/fifamain.git
+cd fifamain
 
 # Install dependencies
 npm install
