@@ -34,7 +34,7 @@ PitchPilot is a GenAI-powered platform that optimizes stadium operations and enh
 
 PitchPilot addresses two critical stakeholder needs at FIFA World Cup 2026 venues:
 
-1. **Fans** receive personalized, context-aware recommendations — including live match timeline, personal itinerary, shortest food/restroom queues, weather advisories, emergency evacuation routing, crowd sentiment, and accessibility support — all driven by their role, location, and the current match phase.
+1. **Fans** receive personalized, context-aware recommendations — including live match timeline, personal itinerary, shortest food/restroom queues, weather advisories, emergency evacuation routing, crowd sentiment, and accessibility support for all driven by their role, location, and the current match phase.
 
 2. **Stadium Staff** get a real-time operations dashboard with AI Staff Copilot, predictive congestion forecasting, crowd density heatmaps, incident management with priority dispatch, and proactive AI briefings — enabling proactive crowd management and rapid incident response.
 
