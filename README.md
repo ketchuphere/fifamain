@@ -21,7 +21,6 @@ PitchPilot is a GenAI-powered platform that optimizes stadium operations and enh
 - [Tech Stack](#tech-stack)
 - [Run Instructions](#run-instructions)
 - [Testing](#testing)
-- [Accessibility](#accessibility)
 - [Project Structure](#project-structure)
 - [Assumptions](#assumptions)
 - [Future Roadmap](#future-roadmap)
