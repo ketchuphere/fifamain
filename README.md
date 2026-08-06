@@ -1,352 +1,185 @@
-# PitchPilot — AI World Cup Companion & Stadium Operations Platform
+# ⚽ PitchPilot
+### AI-Powered Smart Stadium Operations Platform for FIFA World Cup 2026
 
-> **FIFA World Cup 2026 · 16 Host Stadiums · AI-Powered Fan Companion & Intelligent Operations**
+<p align="center">
 
-PitchPilot is a GenAI-powered platform that optimizes stadium operations and enhances the FIFA World Cup 2026 experience through intelligent, real-time, context-aware assistance. It combines **10 deterministic AI engines** with **Google Gemini 3.1 Flash Lite** to serve fans, staff, and security teams across all match phases.
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue?logo=typescript)
+![Google Gemini](https://img.shields.io/badge/Google-Gemini%203.1-4285F4?logo=google)
+![Tests](https://img.shields.io/badge/Tests-163%2B-success)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-[![Tests](https://img.shields.io/badge/tests-163%20passing-brightgreen)](#testing)
-[![TypeScript](https://img.shields.io/badge/TypeScript-strict%20%7C%20zero%20any-blue)](#tech-stack)
-[![Accessibility](https://img.shields.io/badge/a11y-ARIA%20compliant-purple)](#accessibility)
-[![Engines](https://img.shields.io/badge/engines-10%20pure%20functions-orange)](#deterministic-engine-architecture)
+</p>
 
----
+<p align="center">
 
-##  Table of Contents
+ <a href="https://vercel.com/ketchupirl-6129s-projects/fifamain">Live Demo</a> •
+ <a href="./docs/ARCHITECTURE.md">Architecture</a> •
+ <a href="./docs/ALIGNMENT.md">Documentation</a>
 
-- [Chosen Vertical](#chosen-vertical)
-- [How This Solves the Problem Statement](#how-this-solves-the-problem-statement)
-- [Approach and Logic](#approach-and-logic)
-- [Feature Showcase](#feature-showcase)
-- [Architecture Diagram](#architecture-diagram)
-- [Tech Stack](#tech-stack)
-- [Run Instructions](#run-instructions)
-- [Testing](#testing)
-- [Project Structure](#project-structure)
-- [Assumptions](#assumptions)
-- [Future Roadmap](#future-roadmap)
+</p>
 
 ---
 
-## Chosen Vertical
+##  Overview
 
-**Challenge 04: Smart Stadiums & Tournament Operations**
+PitchPilot is an AI-powered Smart Stadium Operations Platform built for the **FIFA World Cup 2026**.
 
-PitchPilot addresses two critical stakeholder needs at FIFA World Cup 2026 venues:
+It combines **deterministic AI systems** with **Google Gemini 3.1 Flash Lite** to assist fans, stadium operators, organizers, and security teams in making intelligent, real-time decisions.
 
-1. **Fans** receive personalized, context-aware recommendations — including live match timeline, personal itinerary, shortest food/restroom queues, weather advisories, emergency evacuation routing, crowd sentiment, and accessibility support for all driven by their role, location, and the current match phase.
-
-2. **Stadium Staff** get a real-time operations dashboard with AI Staff Copilot, predictive congestion forecasting, crowd density heatmaps, incident management with priority dispatch, and proactive AI briefings — enabling proactive crowd management and rapid incident response.
+The platform predicts congestion, optimizes crowd movement, recommends evacuation routes, provides multilingual assistance, and improves the overall stadium experience across **16 World Cup host stadiums**.
 
 ---
 
-## How This Solves the Problem Statement
+# ✨ Key Highlights
 
-The challenge states: _"Create a GenAI-powered solution to optimize stadium operations and enhance the FIFA World Cup 2026 experience through intelligent, real-time assistance."_
-
-### "GenAI-powered solution"
-
-- **Gemini 3.1 Flash Lite** powers the AI chat with full match, navigation, weather, and emergency context (`app/api/chat/route.ts`)
-- **Proactive AI Briefings** (`components/dashboard/ProactiveInsightBrief.tsx`) autonomously identify operational bottlenecks via `app/api/insights/route.ts`
-- **AI Staff Copilot** (`components/dashboard/StaffCopilot.tsx`) provides decision support with actionable recommendations
-
-### "Optimize stadium operations"
-
-- **Multi-Stadium Support** — Full scale support for all 16 FIFA World Cup 2026 Host Stadiums (Azteca, SoFi, MetLife, etc.)
-- **New 'Organizer' Role** — Specialized global overview access for tournament organizers
-- **9-Zone Crowd Analytics** (`lib/engine/crowdAnalyticsEngine.ts`) with density heatmap, bottleneck detection, and zone-by-zone monitoring
-- **Predictive Congestion** (`components/dashboard/PredictiveCongestion.tsx`) forecasts zone occupancy 15 minutes ahead
-- **Incident Management** (`lib/engine/incidentEngine.ts`) with priority sorting, staff dispatch, and zone-aware response times
-- **Graphical Stadium Map** (`components/dashboard/GraphicalStadiumMap.tsx`) with real-time SVG color-coding of 9 zones
-
-### "Enhance the FIFA World Cup 2026 experience"
-
-- **Multilingual Support** — Fan UI and AI Chat adapt to English, Spanish, French, and Arabic
-- **SOS Emergency Broadcast** — Instant emergency assistance routing right from the Fan Hub
-- **Sustainability / Green Travel Badge** (`components/fan/GreenTravelBadge.tsx`) — Rewards users taking public transit
-- **Live Match Timeline** (`components/fan/MatchTimeline.tsx`) with goals, cards, VAR reviews — the AI knows football
-- **Personal Itinerary** (`components/fan/PersonalItinerary.tsx`) — time-aware suggestions: "Kickoff in 25 min, grab food now"
-- **Fan Sentiment Meter** (`components/fan/FanSentiment.tsx`) — crowd excitement visualization
-- **Weather Intelligence** (`components/fan/WeatherBanner.tsx`) — rain/heat advisories with gate recommendations
-- **8 Quick Actions** (`components/fan/QuickActions.tsx`) — food, restroom, wayfinding, merch, step-free routes, match stats, weather, report issue
-
-### "Intelligent, real-time assistance"
-
-- **Dijkstra Navigation** (`lib/engine/navigationEngine.ts`) — "Take me to my seat" → step-by-step route with distance, time, landmarks
-- **Emergency Evacuation** (`lib/engine/emergencyEngine.ts`) — routing away from incident zones with avoidance logic
-- **Context-Aware Chat** — different responses for fans vs. staff, adapts to match phase, zone, stadium, and weather
-- **Deterministic Offline Fallback** — full functionality without API key using engine-generated responses
-
-### "Ability to build a smart, dynamic assistant"
-
-- **Deterministic Context Engine** (`lib/engine/contextDecisionEngine.ts`) — pure functions that map `UserProfile` + `StadiumState` → `ContextRecommendation[]`
-- **10 Pure Engines** — all business logic is testable, reproducible, and framework-agnostic
-- **Role-Adaptive UI** — Fan Hub vs. Ops Dashboard with different layouts, quick actions, and data views
-
-### "Clean and maintainable code"
-
-- **163+ unit tests** with Vitest — every engine, every edge case, every boundary condition
-- **Strict TypeScript** — zero `any`, zero `eslint-disable`
-- **Zod validation** on all data boundaries (API input, LLM output, API response)
-- **< 200 lines per file** — modular, focused components and engines
-- **Pure function architecture** — engines have zero side effects, zero coupling to React
+- ⚽ Supports **16 FIFA World Cup stadiums**
+- 🤖 Google Gemini powered AI assistant
+- 🧠 10 deterministic AI engines
+- 📈 Predictive congestion forecasting
+- 🗺 Dijkstra shortest-path navigation
+- 🚨 Emergency evacuation planning
+- 🌎 Multilingual support
+- ♿ Accessibility-first design
+- 🧪 163+ automated tests
+- 🔒 Strict TypeScript + Zod validation
 
 ---
 
-## Approach and Logic
+# 📊 Project Metrics
 
-### Deterministic Engine Architecture
-
-PitchPilot's core intelligence lives in **10 pure, deterministic engines** inside `lib/engine/`, completely decoupled from the UI:
-
-| Engine           | File                       | Responsibility                                                                                                                  |
-| ---------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| Context Decision | `contextDecisionEngine.ts` | Maps `UserProfile` + `StadiumState` → prioritized `ContextRecommendation[]` based on role, zone, match phase, and accessibility |
-| Crowd Analytics  | `crowdAnalyticsEngine.ts`  | Calculates zone density levels, identifies bottlenecks, computes total occupancy                                                |
-| Wait Time        | `waitTimeEngine.ts`        | Estimates queue wait times using service-rate modeling, finds shortest queues                                                   |
-| Incident         | `incidentEngine.ts`        | Prioritizes incidents by severity/recency, assigns nearest available staff                                                      |
-| Match            | `matchEngine.ts`           | Generates match-context recommendations for goals, cards, half-time                                                             |
-| Navigation       | `navigationEngine.ts`      | Dijkstra's shortest-path routing between 9 stadium zones                                                                        |
-| Emergency        | `emergencyEngine.ts`       | Evacuation routing with zone compromise detection and exit selection                                                            |
-| Itinerary        | `itineraryEngine.ts`       | Phase-aware personal match-day planning                                                                                         |
-| Weather          | `weatherEngine.ts`         | Temperature/condition-based advisories with gate recommendations                                                                |
-| Sentiment        | `sentimentEngine.ts`       | Crowd sentiment scoring from match events, phase, and incidents                                                                 |
-
-**Why this matters:**
-
-- All business logic is **unit-testable** with 146+ passing tests
-- Zero coupling to React — engines can be reused server-side, in workers, or in a mobile app
-- Every recommendation is **explainable** and **reproducible** given the same inputs
-
-### Zod Validation Pipeline
-
-Every data boundary is validated:
-
-```
-User Input → chatRequestSchema (Zod) → Server Route
-LLM Response → llmResponseSchema (Zod) → Client Rendering
-Stadium Data → stadiumApiResponseSchema (Zod) → API Response
-```
-
-This prevents malformed LLM outputs, injection attacks, and type inconsistencies from ever reaching the UI.
+| Metric | Value |
+|---------|------:|
+| AI Engines | 10 |
+| Unit Tests | 163+ |
+| Stadium Zones | 9 |
+| Supported Stadiums | 16 |
+| Languages | 4 |
+| TypeScript | Strict |
+| Validation | Zod |
+| Deployment | Vercel |
 
 ---
 
-## Feature Showcase
+# 🖼 Preview
 
-### Fan Experience Hub
+## Fan Experience
 
-| Feature                      | Component                | Engine                     |
-| ---------------------------- | ------------------------ | -------------------------- |
-|  **8 Quick Actions**       | `QuickActions.tsx`       | —                          |
-|  **Live Match Timeline**   | `MatchTimeline.tsx`      | `matchEngine.ts`           |
-|  **Personal Itinerary**    | `PersonalItinerary.tsx`  | `itineraryEngine.ts`       |
-|  **Weather Advisory**      | `WeatherBanner.tsx`      | `weatherEngine.ts`         |
-|  **Crowd Sentiment**       | `FanSentiment.tsx`       | `sentimentEngine.ts`       |
-|  **Emergency Banner**      | `EmergencyBanner.tsx`    | `emergencyEngine.ts`       |
-|  **Wait Time Display**     | `WaitTimeDisplay.tsx`    | `waitTimeEngine.ts`        |
-|  **Smart Recommendations** | `RecommendationCard.tsx` | `contextDecisionEngine.ts` |
-
-### Operations Dashboard
-
-| Feature                        | Component                   | Engine                    |
-| ------------------------------ | --------------------------- | ------------------------- |
-|  **Interactive Stadium Map** | `GraphicalStadiumMap.tsx`   | `crowdAnalyticsEngine.ts` |
-|  **AI Staff Copilot**        | `StaffCopilot.tsx`          | `incidentEngine.ts`       |
-|  **Predictive Congestion**   | `PredictiveCongestion.tsx`  | `crowdAnalyticsEngine.ts` |
-|  **Proactive AI Briefing**   | `ProactiveInsightBrief.tsx` | Gemini 3.1 Flash Lite     |
-|  **Zone Status Grid**        | `ZoneStatusGrid.tsx`        | `crowdAnalyticsEngine.ts` |
-|  **Crowd Density Card**      | `CrowdDensityCard.tsx`      | `crowdAnalyticsEngine.ts` |
-|  **Wait Time Card**          | `WaitTimeCard.tsx`          | `waitTimeEngine.ts`       |
-|  **Incident Log**            | `IncidentLog.tsx`           | `incidentEngine.ts`       |
-
-### AI Chat Companion
-
-- Role-adaptive system prompt (fan vs. staff vs. security)
-- Full context injection: match score, weather, zone, incidents
-- Structured output parsing with Zod validation
-- Graceful fallback to deterministic engine responses
+![Fan Dashboard](images/fan-dashboard.png)
 
 ---
 
-## Architecture Diagram
+## Stadium Operations Dashboard
+
+![Dashboard](images/dashboard.png)
+
+---
+
+## AI Staff Copilot
+
+![Copilot](images/copilot.png)
+
+---
+
+## AI Chat
+
+![Chat](images/chat.png)
+
+---
+
+# 🏗 System Architecture
 
 ```mermaid
 graph TD
-    subgraph Client["Client (Browser)"]
-        A["Fan / Staff User"] --> B["Role & Zone Selector"]
-        B --> C["AI Chat Companion"]
-        B --> D["Ops Dashboard"]
-        B --> E["Fan Experience Hub"]
-    end
 
-    subgraph FanFeatures["Fan Experience Features"]
-        E --> F1["Match Timeline"]
-        E --> F2["Personal Itinerary"]
-        E --> F3["Weather Banner"]
-        E --> F4["Fan Sentiment"]
-        E --> F5["Emergency Banner"]
-        E --> F6["Quick Actions x8"]
-    end
+User --> NextJS
 
-    subgraph OpsFeatures["Operations Features"]
-        D --> G1["Stadium Map"]
-        D --> G2["Staff Copilot"]
-        D --> G3["Predictive Congestion"]
-        D --> G4["Incident Log"]
-        D --> G5["Proactive AI Brief"]
-    end
+NextJS --> AI
 
-    subgraph Engines["10 Pure Deterministic Engines"]
-        H1["contextDecisionEngine"]
-        H2["crowdAnalyticsEngine"]
-        H3["waitTimeEngine"]
-        H4["incidentEngine"]
-        H5["matchEngine"]
-        H6["navigationEngine"]
-        H7["emergencyEngine"]
-        H8["itineraryEngine"]
-        H9["weatherEngine"]
-        H10["sentimentEngine"]
-    end
+NextJS --> Engines
 
-    subgraph Server["Next.js API Routes"]
-        I1["/api/chat → Gemini 3.1 Flash Lite"]
-        I2["/api/stadium → Zod validated"]
-        I3["/api/insights → AI Briefing"]
-    end
+AI --> Gemini
 
-    B --> Engines
-    Engines --> C
-    Engines --> E
-    Engines --> D
-    Server --> Engines
+Engines --> CrowdEngine
+
+Engines --> Navigation
+
+Engines --> Emergency
+
+Engines --> Match
+
+Engines --> Weather
 ```
 
 ---
 
-## Tech Stack
+# 🚀 Features
 
-| Layer      | Technology                             |
-| ---------- | -------------------------------------- |
-| Framework  | Next.js 16 (App Router, Turbopack)     |
-| Language   | TypeScript (strict mode, zero `any`)   |
-| Styling    | Tailwind CSS v4                        |
-| AI         | Google Gemini 3.1 Flash Lite           |
-| Validation | Zod v4                                 |
-| Testing    | Vitest + React Testing Library + JSDOM |
-| Deployment | Vercel                                 |
+## 👥 Fan Experience
 
----
-
-## Run Instructions
-
-### Prerequisites
-
-- Node.js 18+
-- npm 9+
-
-### Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/ketchuphere/fifamain.git
-cd fifamain
-
-# Install dependencies
-npm install
-
-# Create environment file
-cp .env.local.example .env.local
-# Add your GOOGLE_GENERATIVE_AI_API_KEY to .env.local
-# (Optional: the app works fully without it using deterministic fallback)
-```
-
-### Development
-
-```bash
-# Start dev server
-npm run dev
-
-# Open in browser
-# http://localhost:3000
-```
-
-### Production Build
-
-```bash
-npm run build
-npm start
-```
-
-### Vercel Deployment
-
-```bash
-npx vercel --prod
-```
+- Live Match Timeline
+- Smart Navigation
+- Wait Time Estimation
+- Weather Advisories
+- Emergency Alerts
+- Personal Match Itinerary
+- Crowd Sentiment
+- Accessibility Assistance
 
 ---
 
-## Testing
+## 🛡 Stadium Operations
 
-PitchPilot has **163+ unit and integration tests** covering every engine, component, and data boundary:
-
-```bash
-# Run all tests
-npm run test
-
-# Watch mode
-npm run test:watch
-```
-
-## Problem Statement Alignment & Architecture
-
-For a detailed breakdown of how PitchPilot addresses the FIFA World Cup 2026 Smart Stadiums challenge, please see our dedicated documentation:
-
-- [Problem Statement Alignment Matrix](./docs/ALIGNMENT.md)
-- [The Deterministic Engine Architecture](./docs/ARCHITECTURE.md)
-
-### Test Coverage by Area
-
-| Test File                       | Tests   | What It Covers                                                    |
-| ------------------------------- | ------- | ----------------------------------------------------------------- |
-| `contextDecisionEngine.test.ts` | 13      | Role-based, time-based, zone-based, accessibility recommendations |
-| `crowdAnalyticsEngine.test.ts`  | 16      | Density calculation, bottleneck detection, occupancy totals       |
-| `waitTimeEngine.test.ts`        | 14      | Queue modeling, shortest queue finding, wait time levels          |
-| `incidentEngine.test.ts`        | 15      | Priority sorting, staff dispatch, zone-aware response             |
-| `matchEngine.test.ts`           | 12      | Goal/half-time recommendations, event recency, team attribution   |
-| `navigationEngine.test.ts`      | 10      | Dijkstra routing, accessibility, same-zone, multi-hop             |
-| `emergencyEngine.test.ts`       | 11      | Zone compromise, exit selection, instructions, all-zone coverage  |
-| `itineraryEngine.test.ts`       | 8       | Phase-specific items, unique IDs, priority validation             |
-| `weatherEngine.test.ts`         | 8       | Hot/cold/rain advisories, combined conditions                     |
-| `sentimentEngine.test.ts`       | 9       | Phase factors, incident drag, goal boost, boundary clamping       |
-| `mockData.test.ts`              | 9       | Zod schema validation, seed determinism, cross-reference          |
-| `schemas.test.ts`               | 12      | Zod schema edge cases, validation, rejection                      |
-| `MatchTimeline.test.tsx`        | 4       | Score display, minute, events, empty state                        |
-| `PersonalItinerary.test.tsx`    | 3       | Item rendering, priority indicators, empty state                  |
-| `accessibility.test.tsx`        | 3       | ARIA attributes, semantic landmarks, tab-indexing                 |
-| `shiftBriefingEngine.test.ts`   | 5       | Staff role responsibilities and zone-specific briefing generation |
-| `sustainabilityEngine.test.ts`  | 5       | Green travel badge logic and CO2 savings calculation              |
-| `aiService.test.ts`             | 4       | Fallback mode, empty API keys, correct engine fallback            |
-| `CrowdDensityCard.test.tsx`     | 1       | Sorted density rendering                                          |
-| `WaitTimeCard.test.tsx`         | 1       | Wait time display                                                 |
-| **Total**                       | **163** |                                                                   |
-
-### Type Safety
-
-```bash
-# Zero TypeScript errors
-npx tsc --noEmit
-
-# Zero lint errors
-npm run lint
-```
-
+- AI Staff Copilot
+- Incident Management
+- Crowd Density Heatmaps
+- Predictive Congestion
+- Zone Analytics
+- Proactive AI Briefings
+- Organizer Dashboard
 
 ---
 
-## Project Structure
+## 🤖 AI Features
 
-```
+- Google Gemini Chat
+- Context-aware Responses
+- Deterministic Offline Fallback
+- Role-aware Prompts
+- Match-aware Conversations
+
+---
+
+# 🧠 Engineering Highlights
+
+- Pure Functional Architecture
+- 10 Independent AI Engines
+- Server Components
+- App Router
+- Zod Validation
+- Zero `any`
+- Modular Design
+- Accessibility (ARIA)
+- 163+ Unit Tests
+
+---
+
+# 🛠 Tech Stack
+
+| Category | Technologies |
+|-----------|--------------|
+| Frontend | Next.js 16, React, TypeScript |
+| Styling | Tailwind CSS |
+| AI | Google Gemini 3.1 Flash Lite |
+| Validation | Zod |
+| Testing | Vitest, React Testing Library |
+| Deployment | Vercel |
+
+---
+
+# 📂 Project Structure
+
+```text
 smart-stadium/
 ├── app/
 │   ├── api/
@@ -408,27 +241,123 @@ smart-stadium/
 
 ---
 
-## Assumptions
+# ⚙ Getting Started
 
-1. **IoT Sensor Data is Simulated**: Real crowd density and wait time data would come from IoT sensors, turnstile counters, and POS systems. PitchPilot uses deterministic mock data generators (`lib/data/`) that produce realistic, phase-aware values. The architecture is ready to swap in real data sources.
+## Clone Repository
 
-2. **Multi-Stadium Support**: While initially modeled on MetLife Stadium, the platform now explicitly supports all 16 FIFA World Cup 2026 Host Stadiums (Azteca, SoFi, AT&T, etc.) via dynamic context injection.
+```bash
+git clone https://github.com/ketchuphere/fifamain.git
+cd fifamain
+```
 
-3. **Google Gemini API Availability**: The chat feature requires a valid `GOOGLE_GENERATIVE_AI_API_KEY`. If unavailable, PitchPilot gracefully falls back to engine-generated responses using the deterministic context engine — the app remains fully functional without the LLM.
+Install dependencies
+
+```bash
+npm install
+```
+
+Create environment file
+
+```bash
+cp .env.local.example .env.local
+```
+
+Add
+
+```env
+GOOGLE_GENERATIVE_AI_API_KEY=YOUR_KEY
+```
+
+Start development server
+
+```bash
+npm run dev
+```
+
+Production build
+
+```bash
+npm run build
+npm start
+```
+
+Deploy
+
+```bash
+npx vercel --prod
+```
 
 ---
 
-## Future Roadmap
+# 🧪 Testing
 
-- 🎙️ **Voice Assistant** — hands-free navigation via Web Speech API
-- 📱 **AR Wayfinding** — camera-based indoor navigation overlay
-- 📡 **Real IoT Integration** — replace mock data with turnstile sensors, POS systems
-- 🅿️ **Parking Integration** — lot occupancy via real-time parking sensors
-- 📊 **Historical Analytics** — post-match operational reports and trend analysis
-- 🧑‍🤝‍🧑 **Volunteer Briefing** — role-specific shift briefings with escalation protocols
+Run all tests
+
+```bash
+npm run test
+```
+
+Watch mode
+
+```bash
+npm run test:watch
+```
+
+Type checking
+
+```bash
+npx tsc --noEmit
+```
+
+Lint
+
+```bash
+npm run lint
+```
 
 ---
 
-## License
+# 🎯 Why This Project Stands Out
 
-This is built for the Google PromptWars Hackathon Challenge 04: Smart Stadiums & Tournament Operations — FIFA World Cup 2026.
+✅ AI + Deterministic Decision Systems
+
+✅ Production-grade Next.js Architecture
+
+✅ Context-aware Intelligent Assistant
+
+✅ Scalable Component Design
+
+✅ Test-driven Development
+
+✅ Accessibility-first
+
+✅ Real-world Stadium Operations Use Case
+
+---
+
+# 📌 Future Roadmap
+
+- Voice Assistant
+- AR Navigation
+- Real IoT Sensors
+- Edge AI
+- Digital Twin Stadium
+- Parking Integration
+- Historical Analytics
+- Multi-agent Coordination
+
+---
+
+# 👨‍💻 Author
+
+**Keshav Chawda**
+
+Software & AI Engineering • Machine Learning • Data Science
+
+---
+
+<p align="center">
+
+⭐ If you found this project interesting, consider starring the repository!
+
+</p>
