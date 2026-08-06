@@ -33,7 +33,6 @@ The platform predicts congestion, optimizes crowd movement, recommends evacuatio
 
 # ✨ Key Highlights
 
-- ⚽ Supports **16 FIFA World Cup stadiums**
 - 🤖 Google Gemini powered AI assistant
 - 🧠 10 deterministic AI engines
 - 📈 Predictive congestion forecasting
@@ -63,27 +62,219 @@ The platform predicts congestion, optimizes crowd movement, recommends evacuatio
 
 # 🖼 Preview
 
-## Fan Experience
+Approach and Logic
 
-![Fan Dashboard](images/fan-dashboard.png)
+Deterministic Engine Architecture
 
----
+PitchPilot's core intelligence lives in 10 pure, deterministic engines inside lib/engine/, completely decoupled from the UI:
 
-## Stadium Operations Dashboard
+Engine
 
-![Dashboard](images/dashboard.png)
+File
 
----
+Responsibility
 
-## AI Staff Copilot
+Context Decision
 
-![Copilot](images/copilot.png)
+contextDecisionEngine.ts
 
----
+Maps UserProfile + StadiumState → prioritized ContextRecommendation[] based on role, zone, match phase, and accessibility
 
-## AI Chat
+Crowd Analytics
 
-![Chat](images/chat.png)
+crowdAnalyticsEngine.ts
+
+Calculates zone density levels, identifies bottlenecks, computes total occupancy
+
+Wait Time
+
+waitTimeEngine.ts
+
+Estimates queue wait times using service-rate modeling, finds shortest queues
+
+Incident
+
+incidentEngine.ts
+
+Prioritizes incidents by severity/recency, assigns nearest available staff
+
+Match
+
+matchEngine.ts
+
+Generates match-context recommendations for goals, cards, half-time
+
+Navigation
+
+navigationEngine.ts
+
+Dijkstra's shortest-path routing between 9 stadium zones
+
+Emergency
+
+emergencyEngine.ts
+
+Evacuation routing with zone compromise detection and exit selection
+
+Itinerary
+
+itineraryEngine.ts
+
+Phase-aware personal match-day planning
+
+Weather
+
+weatherEngine.ts
+
+Temperature/condition-based advisories with gate recommendations
+
+Sentiment
+
+sentimentEngine.ts
+
+Crowd sentiment scoring from match events, phase, and incidents
+
+Why this matters:
+
+All business logic is unit-testable with 146+ passing tests
+
+Zero coupling to React — engines can be reused server-side, in workers, or in a mobile app
+
+Every recommendation is explainable and reproducible given the same inputs
+
+Zod Validation Pipeline
+
+Every data boundary is validated:
+
+User Input → chatRequestSchema (Zod) → Server Route
+LLM Response → llmResponseSchema (Zod) → Client Rendering
+Stadium Data → stadiumApiResponseSchema (Zod) → API Response
+
+This prevents malformed LLM outputs, injection attacks, and type inconsistencies from ever reaching the UI.
+
+Feature Showcase
+
+Fan Experience Hub
+
+Feature
+
+Component
+
+Engine
+
+8 Quick Actions
+
+QuickActions.tsx
+
+—
+
+Live Match Timeline
+
+MatchTimeline.tsx
+
+matchEngine.ts
+
+Personal Itinerary
+
+PersonalItinerary.tsx
+
+itineraryEngine.ts
+
+Weather Advisory
+
+WeatherBanner.tsx
+
+weatherEngine.ts
+
+Crowd Sentiment
+
+FanSentiment.tsx
+
+sentimentEngine.ts
+
+Emergency Banner
+
+EmergencyBanner.tsx
+
+emergencyEngine.ts
+
+Wait Time Display
+
+WaitTimeDisplay.tsx
+
+waitTimeEngine.ts
+
+Smart Recommendations
+
+RecommendationCard.tsx
+
+contextDecisionEngine.ts
+
+Operations Dashboard
+
+Feature
+
+Component
+
+Engine
+
+Interactive Stadium Map
+
+GraphicalStadiumMap.tsx
+
+crowdAnalyticsEngine.ts
+
+AI Staff Copilot
+
+StaffCopilot.tsx
+
+incidentEngine.ts
+
+Predictive Congestion
+
+PredictiveCongestion.tsx
+
+crowdAnalyticsEngine.ts
+
+Proactive AI Briefing
+
+ProactiveInsightBrief.tsx
+
+Gemini 3.1 Flash Lite
+
+Zone Status Grid
+
+ZoneStatusGrid.tsx
+
+crowdAnalyticsEngine.ts
+
+Crowd Density Card
+
+CrowdDensityCard.tsx
+
+crowdAnalyticsEngine.ts
+
+Wait Time Card
+
+WaitTimeCard.tsx
+
+waitTimeEngine.ts
+
+Incident Log
+
+IncidentLog.tsx
+
+incidentEngine.ts
+
+AI Chat Companion
+
+Role-adaptive system prompt (fan vs. staff vs. security)
+
+Full context injection: match score, weather, zone, incidents
+
+Structured output parsing with Zod validation
+
+Graceful fallback to deterministic engine responses
 
 ---
 
@@ -91,24 +282,54 @@ The platform predicts congestion, optimizes crowd movement, recommends evacuatio
 
 ```mermaid
 graph TD
+    subgraph Client["Client (Browser)"]
+        A["Fan / Staff User"] --> B["Role & Zone Selector"]
+        B --> C["AI Chat Companion"]
+        B --> D["Ops Dashboard"]
+        B --> E["Fan Experience Hub"]
+    end
 
-User --> NextJS
+    subgraph FanFeatures["Fan Experience Features"]
+        E --> F1["Match Timeline"]
+        E --> F2["Personal Itinerary"]
+        E --> F3["Weather Banner"]
+        E --> F4["Fan Sentiment"]
+        E --> F5["Emergency Banner"]
+        E --> F6["Quick Actions x8"]
+    end
 
-NextJS --> AI
+    subgraph OpsFeatures["Operations Features"]
+        D --> G1["Stadium Map"]
+        D --> G2["Staff Copilot"]
+        D --> G3["Predictive Congestion"]
+        D --> G4["Incident Log"]
+        D --> G5["Proactive AI Brief"]
+    end
 
-NextJS --> Engines
+    subgraph Engines["10 Pure Deterministic Engines"]
+        H1["contextDecisionEngine"]
+        H2["crowdAnalyticsEngine"]
+        H3["waitTimeEngine"]
+        H4["incidentEngine"]
+        H5["matchEngine"]
+        H6["navigationEngine"]
+        H7["emergencyEngine"]
+        H8["itineraryEngine"]
+        H9["weatherEngine"]
+        H10["sentimentEngine"]
+    end
 
-AI --> Gemini
+    subgraph Server["Next.js API Routes"]
+        I1["/api/chat → Gemini 3.1 Flash Lite"]
+        I2["/api/stadium → Zod validated"]
+        I3["/api/insights → AI Briefing"]
+    end
 
-Engines --> CrowdEngine
-
-Engines --> Navigation
-
-Engines --> Emergency
-
-Engines --> Match
-
-Engines --> Weather
+    B --> Engines
+    Engines --> C
+    Engines --> E
+    Engines --> D
+    Server --> Engines
 ```
 
 ---
